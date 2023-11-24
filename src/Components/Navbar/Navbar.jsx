@@ -6,8 +6,8 @@ const Navbar = () => {
 
   return (
     <div>
-      <>
-        <header className="flex flex-wrap items-center sm:justify-start sm:flex-nowrap z-50 w-full bg-black text-sm py-3 sm:py-0">
+      
+        <header className="fixed top-0 flex flex-wrap items-center sm:justify-start sm:flex-nowrap z-50 w-full bg-black text-sm py-3 sm:py-0">
           <nav
             className="relative max-w-[85rem] w-full mx-auto px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8"
             aria-label="Daily News"
@@ -163,7 +163,7 @@ const Navbar = () => {
             </div>
           </nav>
         </header>
-      </>
+ 
     </div>
   );
 };
