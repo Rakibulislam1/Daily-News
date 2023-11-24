@@ -8,7 +8,6 @@ import AllArticles from "../Pages/AllArticles";
 import DashboardLayout from "../Layout/DashboardLayout";
 import PremiumArticles from "../Pages/PremiumArticles";
 import Profile from "../Pages/Profile";
-import Statistic from "../Pages/Statistic";
 
 const router = createBrowserRouter([
   {
