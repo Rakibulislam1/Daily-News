@@ -1,18 +1,22 @@
 import { Link, NavLink } from "react-router-dom";
+import useAuth from "../../Hooks/useAuth";
 
 const Navbar = () => {
+  const { user, logout } = useAuth();
+
   return (
     <div>
       <>
-        <header className="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-black text-sm py-3 sm:py-0">
+        <header className="flex flex-wrap items-center sm:justify-start sm:flex-nowrap z-50 w-full bg-black text-sm py-3 sm:py-0">
           <nav
             className="relative max-w-[85rem] w-full mx-auto px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8"
-            aria-label="Global"
+            aria-label="Daily News"
           >
             <div className="flex items-center justify-between">
-              <Link to='/'
-                className="flex-none text-xl font-semibold text-white"
-                aria-label="Brand"
+              <Link
+                to="/"
+                className="flex-none lg:text-xl text-base font-normal lg:font-semibold text-white"
+                aria-label="Daily News"
               >
                 Daily News
               </Link>
@@ -62,35 +66,35 @@ const Navbar = () => {
               id="navbar-collapse-with-animation"
               className="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:block"
             >
-              <div className="flex text-white font-medium flex-col gap-y-4 gap-x-0 mt-5 sm:flex-row sm:items-center sm:justify-end sm:gap-y-0 sm:gap-x-7 sm:mt-0 sm:ps-7">
+              <div className="flex text-white text-sm font-normal lg:font-medium flex-col gap-y-4 gap-x-0 mt-5 sm:flex-row sm:items-center sm:justify-end sm:gap-y-0 lg:gap-x-7 sm:gap-x-3 sm:mt-0 sm:ps-7">  
                 <NavLink
                   to="/"
-                  className={({ isActive}) =>
-                    isActive ? "text-gray-300 font-medium hover:underline" : ""
+                  className={({ isActive }) =>
+                    isActive ? "text-gray-300 lg:font-medium font-sm underline" : ""
                   }
                 >
                   Home
                 </NavLink>
                 <NavLink
                   to="/addArticles"
-                  className={({ isActive}) =>
-                    isActive ? "text-gray-300 font-medium hover:underline" : ""
+                  className={({ isActive }) =>
+                    isActive ? "text-gray-300 lg:font-medium font-sm underline" : ""
                   }
                 >
                   Add Articles
                 </NavLink>
                 <NavLink
                   to="/allArticles"
-                  className={({ isActive}) =>
-                    isActive ? "text-gray-300 font-medium hover:underline" : ""
+                  className={({ isActive }) =>
+                    isActive ? "text-gray-300 lg:font-medium font-sm underline" : ""
                   }
                 >
                   All Articles
                 </NavLink>
                 <NavLink
                   to="/dashboard"
-                  className={({ isActive}) =>
-                    isActive ? "text-gray-300 font-medium hover:underline" : ""
+                  className={({ isActive }) =>
+                    isActive ? "text-gray-300 lg:font-medium font-sm underline" : ""
                   }
                 >
                   Dashboard
@@ -98,131 +102,63 @@ const Navbar = () => {
 
                 <NavLink
                   to="/myArticles"
-                  className={({ isActive}) =>
-                    isActive ? "text-gray-300 font-medium hover:underline" : ""
+                  className={({ isActive }) =>
+                    isActive ? "text-gray-300 lg:font-medium font-sm underline" : ""
                   }
                 >
                   My Articles
                 </NavLink>
                 <NavLink
                   to="/premiumArticles"
-                  className={({ isActive}) =>
-                    isActive ? "text-gray-300 font-medium hover:underline" : ""
+                  className={({ isActive }) =>
+                    isActive ? "text-gray-300 lg:font-medium font-sm underline" : ""
                   }
                 >
                   Premium Articles
                 </NavLink>
 
+                {user ? (
+                  <div className="flex items-center gap-5">
+                    <Link to="/profile">
+                      <img
+                        className="inline-block h-[2.375rem] w-[2.375rem] rounded-full"
+                        src={user?.photoURL}
+                        alt="Image Description"
+                      />
+                    </Link>
 
-                {/* Dropdown */}
-                {/* <div className="hs-dropdown [--strategy:static] sm:[--strategy:fixed] [--adaptive:none] sm:[--trigger:hover] sm:py-4">
-                  <button
-                    type="button"
-                    className="flex items-center w-full text-white/[.8] hover:text-white font-medium"
-                  >
-                    Dropdown
-                    <svg
-                      className="flex-shrink-0 ms-2 w-4 h-4"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width={24}
-                      height={24}
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
+                    <Link
+                      onClick={logout}
+                      className="flex items-center  gap-x-2 lg:font-medium font-sm text-white hover:text-white sm:border-s sm:border-white/[.3] sm:my-6 sm:ps-6"
                     >
-                      <path d="m6 9 6 6 6-6" />
-                    </svg>
-                  </button>
-                  <div className="hs-dropdown-menu transition-[opacity,margin] duration-[0.1ms] sm:duration-[150ms] hs-dropdown-open:opacity-100 opacity-0 sm:w-48 hidden z-10 bg-white sm:shadow-md rounded-lg p-2 dark:bg-gray-800 sm:dark:border dark:border-gray-700 dark:divide-gray-700 before:absolute top-full sm:border before:-top-5 before:start-0 before:w-full before:h-5">
-                    <a
-                      className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                      
-                    >
-                      About
-                    </a>
-                    <div className="hs-dropdown relative [--strategy:static] sm:[--strategy:absolute] [--adaptive:none] sm:[--trigger:hover]">
-                      <button
-                        type="button"
-                        className="w-full flex justify-between items-center text-sm text-gray-800 rounded-lg py-2 px-3 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                      >
-                        Sub Menu
-                        <svg
-                          className="sm:-rotate-90 flex-shrink-0 ms-2 w-4 h-4"
-                          xmlns="http://www.w3.org/2000/svg"
-                          width={24}
-                          height={24}
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth={2}
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path d="m6 9 6 6 6-6" />
-                        </svg>
-                      </button>
-                      <div className="hs-dropdown-menu transition-[opacity,margin] duration-[0.1ms] sm:duration-[150ms] hs-dropdown-open:opacity-100 opacity-0 sm:w-48 hidden z-10 sm:mt-2 bg-white sm:shadow-md rounded-lg p-2 dark:bg-gray-800 sm:dark:border dark:border-gray-700 dark:divide-gray-700 before:absolute sm:border before:-end-5 before:top-0 before:h-full before:w-5 top-0 end-full !mx-[10px]">
-                        <a
-                          className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                          
-                        >
-                          About
-                        </a>
-                        <a
-                          className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                          
-                        >
-                          Downloads
-                        </a>
-                        <a
-                          className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                          
-                        >
-                          Team Account
-                        </a>
-                      </div>
-                    </div>
-                    <a
-                      className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                      
-                    >
-                      Downloads
-                    </a>
-                    <a
-                      className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                      
-                    >
-                      Team Account
-                    </a>
+                      Log out
+                    </Link>
                   </div>
-                </div> */}
-
-
-
-                <Link
-                  to="/login"
-                  className="flex items-center gap-x-2 font-medium text-white hover:text-white sm:border-s sm:border-white/[.3] sm:my-6 sm:ps-6"
-                >
-                  <svg
-                    className="flex-shrink-0 w-4 h-4"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width={24}
-                    height={24}
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-                    <circle cx={12} cy={7} r={4} />
-                  </svg>
-                  Log in
-                </Link>
+                ) : (
+                  <div>
+                    <Link
+                      to="/login"
+                      className="flex items-center gap-x-2 font-medium text-white hover:text-white sm:border-s sm:border-white/[.3] sm:my-6 sm:ps-6"
+                    >
+                      <svg
+                        className="flex-shrink-0 w-4 h-4"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width={24}
+                        height={24}
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                        <circle cx={12} cy={7} r={4} />
+                      </svg>
+                      Log in
+                    </Link>
+                  </div>
+                )}
               </div>
             </div>
           </nav>

@@ -7,6 +7,7 @@ import AddArticles from "../Pages/AddArticles";
 import AllArticles from "../Pages/AllArticles";
 import DashboardLayout from "../Layout/DashboardLayout";
 import PremiumArticles from "../Pages/PremiumArticles";
+import Profile from "../Pages/Profile";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
       {
         path: "/premiumArticles",
         element: <PremiumArticles></PremiumArticles>,
+      },
+      {
+        path: "/profile",
+        element: <Profile></Profile>,
       }
     ]
   },

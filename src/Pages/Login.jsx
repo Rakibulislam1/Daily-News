@@ -1,10 +1,59 @@
-import { Link } from "react-router-dom";
+/* eslint-disable react/no-unescaped-entities */
+import { useState } from "react";
+import { Helmet } from "react-helmet";
+import toast from "react-hot-toast";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import useAuth from "../Hooks/useAuth";
 
 const Login = () => {
+  const {user, login, googleSignIn} = useAuth();
+  console.log(user);
+  
+  const Navigate = useNavigate();
+  const location = useLocation();
+
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    const toastId = toast.loading("Logging in...");
+
+    try {
+      await login(email, password);
+      toast.success("Logged in successfully", { id: toastId });
+      Navigate(location?.state ? location?.state : "/");
+
+    } catch (err) {
+      toast.error(err.message, { id: toastId });
+    }
+  };
+
+
+  const handleGoogleSignIn = async (e) => {
+    e.preventDefault();
+
+    const toastId = toast.loading("Logging in...");
+
+    try {
+      await googleSignIn();
+      toast.success("Logged in successfully", { id: toastId });
+      Navigate(location?.state ? location?.state : "/");
+
+    } catch (err) {
+      toast.error(err.message, { id: toastId });
+    }
+  };
+
   return (
     <div>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Daily News - Sign in</title>
+      </Helmet>
       <main className="w-full max-w-md mx-auto p-6">
-        <div className="mt-7 bg-white border border-gray-200 rounded-xl shadow-sm dark:bg-gray-800 dark:border-gray-700">
+        <div className="mt-7 bg-white border border-gray-200 rounded-xl shadow-sm dark:bg-black dark:border-black">
           <div className="p-4 sm:p-7">
             <div className="text-center">
               <h1 className="block text-2xl font-bold text-gray-800 dark:text-white">
@@ -12,16 +61,16 @@ const Login = () => {
               </h1>
               <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
                 Don't have an account yet?
-                <Link to='/register'
+                <Link
+                  to="/register"
                   className="text-blue-600 decoration-2 hover:underline font-medium dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                  
                 >
                   Sign up here
                 </Link>
               </p>
             </div>
             <div className="mt-5">
-              <button
+              <button onClick={handleGoogleSignIn}
                 type="button"
                 className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
               >
@@ -55,7 +104,7 @@ const Login = () => {
                 Or
               </div>
               {/* Form */}
-              <form>
+              <form onSubmit={handleLogin}>
                 <div className="grid gap-y-4">
                   {/* Form Group */}
                   <div>
@@ -70,9 +119,11 @@ const Login = () => {
                         type="email"
                         id="email"
                         name="email"
+                        placeholder="Enter your email"
                         className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
                         required=""
                         aria-describedby="email-error"
+                        onBlur={(e) => setEmail(e.target.value)}
                       />
                       <div className="hidden absolute inset-y-0 end-0 flex items-center pointer-events-none pe-3">
                         <svg
@@ -117,9 +168,11 @@ const Login = () => {
                         type="password"
                         id="password"
                         name="password"
+                        placeholder="••••••••"
                         className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
                         required=""
                         aria-describedby="password-error"
+                        onBlur={(e) => setPassword(e.target.value)}
                       />
                       <div className="hidden absolute inset-y-0 end-0 flex items-center pointer-events-none pe-3">
                         <svg
@@ -138,7 +191,7 @@ const Login = () => {
                       className="hidden text-xs text-red-600 mt-2"
                       id="password-error"
                     >
-                      8+ characters required
+                      6+ characters required
                     </p>
                   </div>
                   {/* End Form Group */}
