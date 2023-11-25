@@ -1,4 +1,5 @@
 import AllPublisher from "../Components/AllPublisher/AllPublisher";
+import PremiumSubscription from "../Components/PremiumSubscription/PremiumSubscription";
 import Slider from "../Components/Slider/Slider";
 import Statistic from "../Components/Statistic/Statistic";
 
@@ -8,6 +9,7 @@ const Home = () => {
       <Slider></Slider>
       <AllPublisher></AllPublisher>
       <Statistic></Statistic>
+      <PremiumSubscription></PremiumSubscription>
     </div>
   );
 };
