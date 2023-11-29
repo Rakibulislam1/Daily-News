@@ -1,8 +1,10 @@
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
+import useAdmin from "../../Hooks/useAdmin";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
+  const {isAdmin} = useAdmin()
 
   return (
     <div>
@@ -91,15 +93,18 @@ const Navbar = () => {
                 >
                   All Articles
                 </NavLink>
-                <NavLink
-                  to="/dashboard"
-                  className={({ isActive }) =>
-                    isActive ? "text-gray-300 lg:font-medium font-sm underline" : ""
-                  }
-                >
-                  Dashboard
-                </NavLink>
 
+               {
+                isAdmin &&  <NavLink
+                to="/dashboard/adminDashboard"
+                className={({ isActive }) =>
+                  isActive ? "text-gray-300 lg:font-medium font-sm underline" : ""
+                }
+              >
+                Dashboard
+              </NavLink>
+
+               }
                 <NavLink
                   to="/myArticles"
                   className={({ isActive }) =>
@@ -107,6 +112,15 @@ const Navbar = () => {
                   }
                 >
                   My Articles
+                </NavLink>
+
+                <NavLink
+                  to="/subscription"
+                  className={({ isActive }) =>
+                    isActive ? "text-gray-300 lg:font-medium font-sm underline" : ""
+                  }
+                >
+                  Subscription
                 </NavLink>
                 <NavLink
                   to="/premiumArticles"

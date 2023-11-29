@@ -29,11 +29,11 @@ const AuthProvider = ({children}) => {
   };
 
   // update Profile
-  const handleUpdateProfile = (name, photo) => {
+  const handleUpdateProfile = (photo, name) => {
     setIsLoading(true);
     return updateProfile(auth.currentUser, {
-      displayName: name,
       photoURL: photo,
+      displayName: name,
     });
   };
 
@@ -72,6 +72,7 @@ const AuthProvider = ({children}) => {
 
     return () => {
       return unsubscribe();
+      
     };
   }, []);
   // user?.email

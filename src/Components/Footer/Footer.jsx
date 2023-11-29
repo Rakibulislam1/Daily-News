@@ -10,7 +10,7 @@ const Footer = () => {
         
         aria-label="Brand"
       >
-        Brand
+        Daily News
       </a>
     </div>
     {/* End Col */}
@@ -19,14 +19,14 @@ const Footer = () => {
         We're part of the{" "}
         <a
           className="font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-500 dark:hover:text-blue-400"
-          href="#"
+          
         >
-          Htmlstream
+          Multimedia
         </a>{" "}
         family.
       </p>
       <p className="text-gray-500">
-        © Preline. 2022 Htmlstream. All rights reserved.
+      Daily News™&copy; 2023. All rights reserved.
       </p>
     </div>
     {/* Social Brands */}

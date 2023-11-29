@@ -1,13 +1,20 @@
+/* eslint-disable no-unused-vars */
 import { Helmet } from "react-helmet";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import useAxiosPublic from "../Hooks/useAxiosPublic";
+
+const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const Register = () => {
   const { user, createUser, handleUpdateProfile } = useAuth();
 
-  console.log(user);
+  // console.log(user);
+
+  const axiosPublic = useAxiosPublic()
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -15,47 +22,77 @@ const Register = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [name, setName] = useState();
-  const [photo, setPhoto] = useState();
+  // const [photo, setPhoto] = useState();
 
   
   const handleCreateUser = async (e) => {
     e.preventDefault();
 
-    const toastId = toast.loading("Signed up...");
+    // const toastId = toast.loading("Signed up...");
 
 
     if (password.length < 6) {
       return toast.error("Password must be at least 6 characters long", {
-        id: toastId,
+        // id: toastId,
       });
     } else if (!/[A-Z]/.test(password)) {
       return toast.error("Password must contain at least one Capital letter.", {
-        id: toastId,
+        // id: toastId,
       });
     } else if (!/[0-9]/.test(password)) {
       return toast.error("Password must contain at least one Numeric letter.", {
-        id: toastId,
+        // id: toastId,
       });
     } else if (!/[!@#$%^&*:;?,.]/.test(password)) {
       return toast.error("Password must contain at least one special character", {
-        id: toastId,
+        // id: toastId,
       });
     }
 
-    
-    try {
-      await createUser(email, password);
-      handleUpdateProfile(name, photo);
-      toast.success("Signed up successfully", { id: toastId });
+  
+    const form = e.target
+     const photo = form.photo.files[0]
+    //  console.log(photo);
+    const imgFile = { image: photo };
+    // console.log(imgFile);
+    const res = await axiosPublic.post(image_hosting_api, imgFile, {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    });
 
-      navigate(location?.state ? location?.state : "/");
-    } catch (err) {
-      toast.error(err.message);
+    console.log(res.data);
+    if (res.data.success) {
+      const data = {
+        name,
+        email,
+        image: res.data.data.display_url,
+      };
+      console.log(data);
+      // await createUser(email, password);
+      // handleUpdateProfile(name, photo);
+      // toast.success("Signed up successfully", { id: toastId });
+
+      const result = await axiosPublic.post("/users", data);
+      console.log(result.data);
+      if (result.data.insertedId) {
+        createUser(email, password)
+          .then((data) => {
+            // console.log(data);
+            handleUpdateProfile(res.data.data.display_url, name).then((res) => {
+              // console.log(res);
+              // toast.success("User created successfully", { id: toastId });
+              navigate(location.state ? location.state : "/");
+            });
+          })
+          .catch((err) => console.log(err.message));
+      }
     }
+
   };
 
   return (
-    <div>
+    <div className="mt-20">
       <Helmet>
         <meta charSet="utf-8" />
         <title>Daily News - Sign in</title>
@@ -211,14 +248,14 @@ const Register = () => {
                     </label>
                     <div className="relative">
                       <input
-                        type="text"
+                        type="file"
                         id="photo"
                         name="photo"
                         className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
                         required=""
                         placeholder="Your Photo URL"
                         aria-describedby="email-error"
-                        onBlur={(e) => setPhoto(e.target.value)}
+                        // onBlur={(e) => setPhoto(e.target.value)}
                       />
                       <div className="hidden absolute inset-y-0 end-0 flex items-center pointer-events-none pe-3">
                         <svg
