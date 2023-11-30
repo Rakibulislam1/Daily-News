@@ -1,8 +1,34 @@
-# React + Vite
+- Project Name :- Daily News
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- Project Live Link :- (https://dummy-d6041.web.app)
 
-Currently, two official plugins are available:
+Some bullet points of this Project:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+➤ _Homepage Banner_
+
+➤ _Articles Names_
+
+➤ _User Authentication and Authorization_
+
+➤ _Sweet Alert Notifications_
+
+➤ _Private Routes_
+
+➤ _Dynamic Navigation Bar_
+
+➤ _Testimonial Section_
+
+➤ _Marquee_
+
+➤ _Lottie-react_
+
+➤ _Search by title_
+
+➤ _Infinite-scroll_
+
+➤ _Pagination_
+
+➤ _Payment getway with stripe_
+
+➤ _Jwt_
+

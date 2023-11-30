@@ -1,16 +1,18 @@
 import { Link } from "react-router-dom";
-import useAxiosPublic from "../Hooks/useAxiosPublic";
+
 import { useQuery } from "@tanstack/react-query";
 import Lottie from "lottie-react";
 import premium from "../../public/premium.json";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
+import { Helmet } from "react-helmet";
 
 const PremiumArticles = () => {
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
 
   const { data: premiumArticles = [] } = useQuery({
     queryKey: ["Premium"],
     queryFn: async () => {
-      const res = await axiosPublic.get(`/premiumArticle?plan=Premium`);
+      const res = await axiosSecure.get(`/premiumArticle?plan=Premium`);
       console.log(res.data);
       return res.data;
     },
@@ -18,11 +20,14 @@ const PremiumArticles = () => {
 
   return (
     <div className="mt-20">
+      <Helmet>
+        <title>Daily News- Premium Articles</title>
+      </Helmet>
       <section className="mx-4 antialiased grid lg:grid-cols-2 grid-col gap-5">
         {premiumArticles.map((articles) => (
           <article
             key={articles._id}
-            className=" flex flex-wrap md:flex-nowrap border-2 border-green-500 shadow-lg rounded-lg max-w-3xl group cursor-pointer transform duration-500 hover:-translate-y-1"
+            className=" flex flex-wrap md:flex-nowrap border-2 shadow-lg rounded-lg max-w-3xl group cursor-pointer transform duration-500 hover:-translate-y-1"
           >
             <img
               className="w-full max-h-[400px] object-cover md:w-52 lg:rounded-l-lg rounded-t-lg lg:rounded-tr-none"

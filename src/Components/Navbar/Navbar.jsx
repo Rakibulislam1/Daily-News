@@ -77,7 +77,9 @@ const Navbar = () => {
                 >
                   Home
                 </NavLink>
-                <NavLink
+
+                {
+                  user && <NavLink
                   to="/addArticles"
                   className={({ isActive }) =>
                     isActive ? "text-gray-300 lg:font-medium font-sm underline" : ""
@@ -85,7 +87,10 @@ const Navbar = () => {
                 >
                   Add Articles
                 </NavLink>
-                <NavLink
+                }
+
+                {
+                  user && <NavLink
                   to="/allArticles"
                   className={({ isActive }) =>
                     isActive ? "text-gray-300 lg:font-medium font-sm underline" : ""
@@ -93,6 +98,7 @@ const Navbar = () => {
                 >
                   All Articles
                 </NavLink>
+                }
 
                {
                 isAdmin &&  <NavLink
@@ -105,7 +111,9 @@ const Navbar = () => {
               </NavLink>
 
                }
-                <NavLink
+                
+                { user &&
+                  <NavLink
                   to="/myArticles"
                   className={({ isActive }) =>
                     isActive ? "text-gray-300 lg:font-medium font-sm underline" : ""
@@ -113,8 +121,11 @@ const Navbar = () => {
                 >
                   My Articles
                 </NavLink>
+                }
 
-                <NavLink
+                {
+                  user && 
+                  <NavLink
                   to="/subscription"
                   className={({ isActive }) =>
                     isActive ? "text-gray-300 lg:font-medium font-sm underline" : ""
@@ -122,7 +133,12 @@ const Navbar = () => {
                 >
                   Subscription
                 </NavLink>
-                <NavLink
+                }
+
+                
+                {
+                  user &&
+                  <NavLink
                   to="/premiumArticles"
                   className={({ isActive }) =>
                     isActive ? "text-gray-300 lg:font-medium font-sm underline" : ""
@@ -130,6 +146,7 @@ const Navbar = () => {
                 >
                   Premium Articles
                 </NavLink>
+                }
 
                 {user ? (
                   <div className="flex items-center gap-5">

@@ -4,6 +4,7 @@ import useAxiosPublic from "../Hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../Hooks/useAuth";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -14,9 +15,10 @@ const publisherTags = [
   { value: "#sports", label: "#sports" },
   { value: "#fitness", label: "#fitness" },
   { value: "#movie", label: "#movie" },
-  { value: "#travel", label: "#travel" },
+  { value: "#business", label: "#business" },
   { value: "#magazine", label: "#magazine" },
   { value: "#news", label: "#news" },
+  { value: "#entertainment", label: "#entertainment" },
 ];
 
 const AddArticles = () => {
@@ -81,6 +83,9 @@ const AddArticles = () => {
   };
   return (
     <div className="mt-28">
+      <Helmet>
+        <title>Daily News-Add Article</title>
+      </Helmet>
       <h2 className="text-2xl font-bold text-center mb-10">
         Add Your Article Here{" "}
       </h2>

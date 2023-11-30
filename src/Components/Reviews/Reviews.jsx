@@ -4,19 +4,21 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { useEffect, useState } from "react";
 import { Rating } from "@smastrom/react-rating";
-import { FaQuoteLeft } from "react-icons/fa";
 
 import "@smastrom/react-rating/style.css";
 
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);
   useEffect(() => {
-    fetch("/public/review.json")
+    fetch("/review.json")
       .then((res) => res.json())
       .then((data) => setReviews(data));
   }, []);
   return (
     <div className="max-w-7xl mx-auto my-20">
+      <div className="text-center mt-20 mb-10">
+        <h2 className="text-2xl font-bold">Our Client Review</h2>
+      </div>
       <Swiper navigation={true} modules={[Navigation, Autoplay]} autoplay={{
           delay: 2500,
           disableOnInteraction: false,
@@ -30,7 +32,6 @@ const Reviews = () => {
                 value={review.rating}
                 readOnly
               />
-              <FaQuoteLeft className="text-8xl pt-5"></FaQuoteLeft>
               <p className="py-6">{review.details}</p>
               <h3 className="text-2xl text-orange-400">{review.name}</h3>
             </div>

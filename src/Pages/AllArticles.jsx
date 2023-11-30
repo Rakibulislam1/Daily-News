@@ -1,14 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
-import useAxiosPublic from "../Hooks/useAxiosPublic";
+
 import { Link } from "react-router-dom";
 import premium from "../../public/premium.json";
 import Lottie from "lottie-react";
 
 import { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
+import { Helmet } from "react-helmet";
 
 const AllArticles = () => {
-  const axiosPublic = useAxiosPublic();
+
+  const axiosSecure = useAxiosSecure();
   // infinite scroll
   const [dataSource, setDataSource] = useState(Array.from({ length: 2 }));
   const [hasMore, setHasMore] = useState(true);
@@ -30,7 +33,7 @@ const AllArticles = () => {
   const { data: allArticles = [] } = useQuery({
     queryKey: ["add-articles"],
     queryFn: async () => {
-      const res = await axiosPublic.get("/add-articles/approve");
+      const res = await axiosSecure.get("/add-articles/approve");
       console.log(res.data);
       return res.data;
     },
@@ -53,6 +56,9 @@ const AllArticles = () => {
 
   return (
     <div className="mt-20 max-w-7xl mx-auto">
+      <Helmet>
+        <title>Daily News-All Articles</title>
+      </Helmet>
       <form className="flex justify-center gap-5 mb-10">
         <div className="flex">
           <input

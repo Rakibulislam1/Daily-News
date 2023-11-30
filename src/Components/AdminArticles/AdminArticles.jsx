@@ -1,10 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import useAuth from "../../Hooks/useAuth";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import DashboardDecline from "../DashboardDecline/DashboardDecline";
 import { useState } from "react";
+import { Helmet } from "react-helmet";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const AdminArticles = () => {
   const { user } = useAuth();
@@ -14,11 +15,11 @@ const AdminArticles = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const { data: addArticles = [], refetch } = useQuery({
     queryKey: ["add-articles"],
     queryFn: async () => {
-      const res = await axiosPublic.get("/add-articles");
+      const res = await axiosSecure.get("/add-articles");
       console.log(res.data);
       return res.data;
     },
@@ -42,7 +43,7 @@ const AdminArticles = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosPublic.delete(`/add-articles/${id}`).then((res) => {
+        axiosSecure.delete(`/add-articles/${id}`).then((res) => {
           if (res.data.deletedCount > 0) {
             refetch();
             Swal.fire({
@@ -67,7 +68,7 @@ const AdminArticles = () => {
       confirmButtonText: "Yes, premium it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosPublic.patch(`/add-articles/premium/${id}`).then((res) => {
+        axiosSecure.patch(`/add-articles/premium/${id}`).then((res) => {
           if (res.data.modifiedCount > 0) {
             refetch();
             Swal.fire({
@@ -82,7 +83,7 @@ const AdminArticles = () => {
   };
 
   const handleApprove = (id) => {
-    axiosPublic
+    axiosSecure
       .patch(`/add-articles/${id}`, { status: "Approve" })
       .then((res) => {
         if (res.data.modifiedCount > 0) {
@@ -94,6 +95,9 @@ const AdminArticles = () => {
 
   return (
     <div className="ml-48">
+      <Helmet>
+        <title>Daily News-Dashboard All Articles</title>
+      </Helmet>
       <table className="min-w-full divide-y divide-gray-200 overflow-x-auto">
         <thead className="bg-gray-50">
           <tr>

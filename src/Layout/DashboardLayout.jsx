@@ -3,10 +3,14 @@ import { LuUsers } from "react-icons/lu";
 import { RiArticleLine } from "react-icons/ri";
 import { IoHomeOutline } from "react-icons/io5";
 import { MdPublishedWithChanges } from "react-icons/md";
+import { Helmet } from "react-helmet";
 
 const DashboardLayout = () => {
   return (
     <div>
+      <Helmet>
+        <title>Daily News-Dashboard All Users</title>
+      </Helmet>
       <div className="flex flex-col lg:flex-row">
         <div className="w-64">
           <button

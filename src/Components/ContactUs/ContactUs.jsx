@@ -1,7 +1,7 @@
 import { FaLocationArrow } from "react-icons/fa6";
 const ContactUs = () => {
   return (
-    <div>
+    <div className="mx-2">
       <div className="text-center mt-20 mb-10">
         <h2 className="text-2xl font-bold">Contact Us</h2>
       </div>

@@ -4,17 +4,19 @@ import { useQuery } from "@tanstack/react-query";
 
 import useAuth from "../Hooks/useAuth";
 import Swal from "sweetalert2";
-import useAxiosPublic from "../Hooks/useAxiosPublic";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
+import { Helmet } from "react-helmet";
+
 
 
 const MyArticles = () => {
-  const axiosPublic  = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
 
   const { data: articles, refetch} = useQuery({
     queryKey: ["add-articles"],
     queryFn: async () => {
-      const res = await axiosPublic.get(
+      const res = await axiosSecure.get(
         `/add-articles/myArticle?email=${user?.email}`
       );
       console.log(res.data);
@@ -33,7 +35,7 @@ const MyArticles = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosPublic.delete(`/add-articles/myArticle/${id}`).then((res) => {
+        axiosSecure.delete(`/add-articles/myArticle/${id}`).then((res) => {
           if (res.data.deletedCount > 0) {
             refetch();
             Swal.fire({
@@ -49,6 +51,9 @@ const MyArticles = () => {
 
   return (
     <div className="mt-[4rem]">
+      <Helmet>
+        <title>Daily News- My Articles</title>
+      </Helmet>
       {articles?.length === 0 ? (
         <p className="text-center flex justify-center">No Articles Found</p>
       ) : (

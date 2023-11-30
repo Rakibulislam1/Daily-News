@@ -1,17 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
-import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import Swal from "sweetalert2";
 import { useState } from "react";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const AllUser = () => {
 
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
+
   const { data: users = [], refetch } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await axiosPublic.get("/users");
+      const res = await axiosSecure.get("/users");
       console.log(res.data);
-      return res.data; // Add this line to return the data
+      return res.data;
     },
   });
 
@@ -23,7 +24,7 @@ const AllUser = () => {
   const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
 
   const handleMakeAdmin = async (user) => {
-    const result = await axiosPublic.patch(`/users/role/${user._id}`);
+    const result = await axiosSecure.patch(`/users/role/${user._id}`);
     console.log(result);
     if (result.data.modifiedCount > 0) {
       refetch();

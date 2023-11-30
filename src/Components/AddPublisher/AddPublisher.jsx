@@ -1,5 +1,6 @@
 import toast from "react-hot-toast";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import { Helmet } from "react-helmet";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -35,6 +36,9 @@ const AddPublisher = () => {
 
   return (
     <>
+    <Helmet>
+        <title>Daily News- Dashboard Add Publisher</title>
+      </Helmet>
       <div className="flex flex-col justify-center py-5 sm:px-6 lg:px-8 px-6">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <h2 className="text-2xl font-bold text-center">Add New Publisher</h2>

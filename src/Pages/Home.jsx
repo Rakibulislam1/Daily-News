@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet";
 import AllPublisher from "../Components/AllPublisher/AllPublisher";
 import ContactUs from "../Components/ContactUs/ContactUs";
 import PremiumSubscription from "../Components/PremiumSubscription/PremiumSubscription";
@@ -8,6 +9,9 @@ import Statistic from "../Components/Statistic/Statistic";
 const Home = () => {
   return (
     <div>
+      <Helmet>
+        <title>Daily News-Home</title>
+      </Helmet>
       <Slider></Slider>
       <AllPublisher></AllPublisher>
       <Statistic></Statistic>

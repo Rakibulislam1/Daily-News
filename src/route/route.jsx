@@ -18,6 +18,8 @@ import PrivateRoute from "./PrivateRoute";
 import UpdateArticles from "../Pages/UpdateArticles";
 import AllArticlesViewDetails from "../Pages/AllArticlesViewDetails";
 import Subscription from "../Pages/Subscription";
+import CheckPayment from "../Pages/CheckPayment";
+import Payment from "../Pages/Payment";
 
 const router = createBrowserRouter([
   {
@@ -39,7 +41,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/addArticles",
-        element: <AddArticles></AddArticles>,
+        element: (
+          <PrivateRoute>
+            <AddArticles></AddArticles>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/allArticles",
@@ -47,57 +53,88 @@ const router = createBrowserRouter([
       },
       {
         path: "/subscription",
-        element: <Subscription></Subscription>,
+        element: (
+          <PrivateRoute>
+            <Subscription></Subscription>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/myArticles",
-        element: <PrivateRoute><MyArticles></MyArticles></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <MyArticles></MyArticles>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/premiumArticles",
-        element: <PremiumArticles></PremiumArticles>,
+        element: (
+          <PrivateRoute>
+            <PremiumArticles></PremiumArticles>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/profile",
-        element: <Profile></Profile>,
+        element: (
+          <PrivateRoute>
+            <Profile></Profile>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/checkPayment",
+        element: <CheckPayment></CheckPayment>,
+      },
+      {
+        path: "/payment/:id",
+        element: <Payment></Payment>,
       },
       {
         path: "/updateArticle/:id",
         element: <UpdateArticles></UpdateArticles>,
-        loader: ({ params }) => fetch(`http://localhost:5000/add-articles/update/${params.id}`),
+        loader: ({ params }) =>
+          fetch(
+            `https://daily-news-hazel-seven.vercel.app/add-articles/update/${params.id}`
+          ),
       },
       {
         path: "/allArticlesViewDetails/:id",
         element: <AllArticlesViewDetails></AllArticlesViewDetails>,
-        loader: ({ params }) => fetch(`http://localhost:5000/add-articles/viewDetails/${params.id}`),
+        loader: ({ params }) =>
+          fetch(
+            `https://daily-news-hazel-seven.vercel.app/add-articles/viewDetails/${params.id}`
+          ),
       },
-    ]
-    
+    ],
   },
   {
-      path: "/dashboard",
-      element: <DashboardLayout></DashboardLayout>,
-      children: [
-        {
-          path: "adminDashboard",
-          element: <AdminDashboard></AdminDashboard>,
-        },
-        {
-          path: "allUser",
-          element: <AllUser></AllUser>,
-        },
-        {
-          path: "adminArticles",
-          element: <AdminArticles></AdminArticles>
-        },
-        {
-          path: "addPublisher",
-          element: <AddPublisher></AddPublisher>
-        }
-
-      ]
-
-  }
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout></DashboardLayout>
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        path: "adminDashboard",
+        element: <AdminDashboard></AdminDashboard>,
+      },
+      {
+        path: "allUser",
+        element: <AllUser></AllUser>,
+      },
+      {
+        path: "adminArticles",
+        element: <AdminArticles></AdminArticles>,
+      },
+      {
+        path: "addPublisher",
+        element: <AddPublisher></AddPublisher>,
+      },
+    ],
+  },
 ]);
 
 export default router;

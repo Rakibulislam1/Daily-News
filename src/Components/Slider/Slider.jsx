@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import AwesomeSlider from "react-awesome-slider";
 import withAutoplay from "react-awesome-slider/dist/autoplay";
 import "react-awesome-slider/dist/styles.css";
@@ -9,30 +10,27 @@ const AutoplaySlider = withAutoplay(AwesomeSlider);
 const Slider = () => {
   return (
     <div>
-      <div className="bg-[#F3F3F3] flex items-center mt-[4rem]">
+      <div className="bg-[#F3F3F3] flex items-center lg:mt-[4rem] mt-[60px] md:mt-[87px]">
         <h2 className="px-6 py-3 text-xl font-medium bg-blue-500 text-white">
           Latest
         </h2>
         <Marquee pauseOnHover={true}>
           <Link to="/" className="text-lg font-semibold text-[#403F3F] mr-10">
-            Match Highlights: Germany vs Spain — as it happened ! Match
-            Highlights: Germany vs Spain as...
+          Trump arraignment has "unparalleled public interest," but it won't be broadcast, judge says...
           </Link>
           <Link to="/" className="text-lg font-semibold text-[#403F3F] mr-10">
-            Match Highlights: Germany vs Spain — as it happened ! Match
-            Highlights: Germany vs Spain as...
+          Haberman reveals why Trump attacked judge and his family in speech...
           </Link>
           <Link to="/" className="text-lg font-semibold text-[#403F3F] mr-10">
-            Match Highlights: Germany vs Spain — as it happened ! Match
-            Highlights: Germany vs Spain as...
+          Judge will only briefly allow photos in the courtroom before Trump arraignment begins...
           </Link>
         </Marquee>
       </div>
       <AutoplaySlider
         play={true}
-        cancelOnInteraction={false} // should stop playing on user interaction
+        cancelOnInteraction={false}
         interval={500}
-        style={{ height: "90vh" }}
+        // style={{ height: "90vh" }}
       >
         <div data-src="https://i.ibb.co/zJLZ7pc/slider-1.jpg" />
         <div data-src="https://i.ibb.co/4NN0X7V/slider-2.jpg" />
