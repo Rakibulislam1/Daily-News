@@ -5,14 +5,25 @@ import Lottie from "lottie-react";
 import premium from "../../public/premium.json";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import { Helmet } from "react-helmet";
+import useAuth from "../Hooks/useAuth";
 
 const PremiumArticles = () => {
   const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
 
   const { data: premiumArticles = [] } = useQuery({
     queryKey: ["Premium"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/premiumArticle?plan=Premium`);
+      console.log(res.data);
+      return res.data;
+    },
+  });
+
+  const { data: disablePremiumButton = [] } = useQuery({
+    queryKey: ["users"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/disablePremiumButton/${user.email}`);
       console.log(res.data);
       return res.data;
     },
@@ -36,9 +47,13 @@ const PremiumArticles = () => {
             />
             <div className="">
               <div className="absolute right-2 bottom-2">
-              {articles?.plan === "Premium" && (
-                <Lottie className="w-16" animationData={premium} loop={true} />
-              )}
+                {articles?.plan === "Premium" && (
+                  <Lottie
+                    className="w-16"
+                    animationData={premium}
+                    loop={true}
+                  />
+                )}
               </div>
               <div className="p-5 pb-4">
                 <h1 className="text-2xl font-semibold text-gray-800">
@@ -52,24 +67,64 @@ const PremiumArticles = () => {
               </div>
               <div className="p-5">
                 <div className="sm:flex sm:justify-between">
-                  <Link
-                    to={`/allArticlesViewDetails/${articles._id}`}
-                    href=""
-                    className="text-blue-500 border absolute bottom-3 border-blue-500 py-3 px-4 rounded inline-flex items-center"
-                  >
-                    View Details
-                    <svg
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      viewBox="0 0 24 24"
-                      className="w-6 h-6 ml-2"
+                  {articles.plan ? (
+                    <>
+                      {disablePremiumButton?.premiumTaken ? (
+                        <Link
+                          to={`/allArticlesViewDetails/${articles._id}`}
+                          href=""
+                          className="text-blue-500 border absolute bottom-3 border-blue-500 py-3 px-4 rounded inline-flex items-center"
+                        >
+                          View Details
+                          <svg
+                            fill="none"
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            viewBox="0 0 24 24"
+                            className="w-6 h-6 ml-2"
+                          >
+                            <path d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                          </svg>
+                        </Link>
+                      ) : (
+                        <button className="text-blue-500 border absolute bottom-3 border-blue-500 py-3 px-4 rounded inline-flex items-center disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                          View Details
+                          <svg
+                            fill="none"
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            viewBox="0 0 24 24"
+                            className="w-6 h-6 ml-2"
+                          >
+                            <path d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                          </svg>
+                        </button>
+                      )}
+                    </>
+                  ) : (
+                    <Link
+                      to={`/allArticlesViewDetails/${articles._id}`}
+                      href=""
+                      className="text-blue-500 border absolute bottom-3 border-blue-500 py-3 px-4 rounded inline-flex items-center disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                     >
-                      <path d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </Link>
+                      View Details
+                      <svg
+                        fill="none"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        viewBox="0 0 24 24"
+                        className="w-6 h-6 ml-2"
+                      >
+                        <path d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      </svg>
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>

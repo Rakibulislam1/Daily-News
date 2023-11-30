@@ -1,10 +1,13 @@
 import CountUp from "react-countup";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
+import { useState } from "react";
 
 
 
 const Statistic = () => {
+  const [data, setData] = useState('')
 
   const axiosPublic = useAxiosPublic();
   const { data: user = [] } = useQuery({
@@ -12,18 +15,15 @@ const Statistic = () => {
     queryFn: async () => {
       const res = await axiosPublic.get("/users");
       console.log(res.data);
-      return res.data; // Add this line to return the data
-    },
-  });
-
-  const { data: premiumArticles = [] } = useQuery({
-    queryKey: ["Premium"],
-    queryFn: async () => {
-      const res = await axiosPublic.get(`/premiumArticle?plan=Premium`);
-      console.log(res.data);
       return res.data;
     },
   });
+
+  useEffect(() => {
+    const premiumUser = user.filter((u) => u.premiumTaken === "true");
+    setData(premiumUser);
+  }, [user]);
+ 
   
   return (
     <div>
@@ -45,7 +45,7 @@ const Statistic = () => {
             Normal users
           </h4>
           <p className="sm:mt-3 text-xl sm:text-3xl text-center font-bold text-blue-500">
-            <CountUp delay={0.5} end={premiumArticles.length - user.length} />
+            <CountUp delay={0.5} end={user.length - data.length} />
             <span>+</span>
           </p>
         </div>
@@ -54,7 +54,7 @@ const Statistic = () => {
             Premium users
           </h4>
           <p className="sm:mt-3 text-xl sm:text-3xl text-center font-bold text-blue-500">
-            <CountUp delay={0.5} end={44444} />
+            <CountUp delay={0.5} end={data.length} />
             <span>+</span>
           </p>
         </div>
